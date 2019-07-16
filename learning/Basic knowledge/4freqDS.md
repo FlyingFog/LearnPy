@@ -1,4 +1,6 @@
-#字符串
+### 字符串
+
+```python
 def strOP():
     str1 = 'hello, world!'
     # 通过len函数计算字符串的长度
@@ -43,38 +45,46 @@ def strOP():
     # 获得字符串修剪左右两侧空格的拷贝
     print(str3.strip())
 print("strOP:" , strOP())
+```
 
 
 
-#列表
+### 列表
+```python
 def listOP():
     list1 = [1, 3, 5, 7, 100]
     print(list1)
     list2 = ['hello'] * 5
     print(list2)
-    # 计算列表长度(元素个数)
+
+# 计算列表长度(元素个数)
     print(len(list1))
-    # 下标(索引)运算
+
+# 下标(索引)运算
     print(list1[0])
     print(list1[4])
-    # print(list1[5])  # IndexError: list index out of range
+
+  # print(list1[5])  # IndexError: list index out of range
     print(list1[-1])
     print(list1[-3])
     list1[2] = 300
     print(list1)
-    # 添加元素
+
+# 添加元素
     list1.append(200)
     list1.insert(1, 400)
     list1 += [1000, 2000]
     print(list1)
     print(len(list1))
-    # 删除元素
+
+# 删除元素
     list1.remove(3)
     if 1234 in list1:
         list1.remove(1234)
     del list1[0]
     print(list1)
-    # 清空列表元素
+
+# 清空列表元素
     list1.clear()
     print(list1)
 
@@ -114,9 +124,7 @@ def listOP3():
     list1.sort(reverse=True)
     print(list1)
 
-
 import sys
-
 
 def listOP4():
     f = [x for x in range(1, 10)]
@@ -138,21 +146,27 @@ def listOP4():
         print(val)
 
 #Python中还有另外一种定义生成器的方式，就是通过yield关键字将一个普通函数改造成生成器函数。
-
 def fib(n):
     a, b = 0, 1
     for _ in range(n):
         a, b = b, a + b
         yield a
 
-
 def main():
     for val in fib(20):
         print(val)
 		
-#元组 把多个元素组合到一起就形成了一个元组，所以它和列表一样可以保存多条数据
+```
+
+
+
+### 元组 
+
+把多个元素组合到一起就形成了一个元组，所以它和列表一样可以保存多条数据
+
+```python
 def tupleOP():
-    # 定义元组
+# 定义元组
     t = ('骆昊', 38, True, '四川成都')
     print(t)
     # 获取元组中的元素
@@ -177,8 +191,15 @@ def tupleOP():
     fruits_list = ['apple', 'banana', 'orange']
     fruits_tuple = tuple(fruits_list)
     print(fruits_tuple)
+```
 
-#集合 不允许有重复元素，可以进行交集、并集、差集等运算。
+
+
+### 集合 
+
+不允许有重复元素，可以进行交集、并集、差集等运算。
+
+```python
 def setOP():
     set1 = {1, 2, 3, 3, 3, 2}
     print(set1)
@@ -191,63 +212,5 @@ def setOP():
     print(set1)
     print(set2)
     set2.discard(5)
-    # remove的元素如果不存在会引发KeyError
-    if 4 in set2:
-        set2.remove(4)
-    print(set2)
-    # 遍历集合容器
-    for elem in set2:
-        print(elem ** 2, end=' ')
-    print()
-    # 将元组转换成集合
-    set3 = set((1, 2, 3, 3, 2, 1))
-    print(set3.pop())
-    print(set3)
-    # 集合的交集、并集、差集、对称差运算
-    print(set1 & set2)
-    # print(set1.intersection(set2))
-    print(set1 | set2)
-    # print(set1.union(set2))
-    print(set1 - set2)
-    # print(set1.difference(set2))
-    print(set1 ^ set2)
-    # print(set1.symmetric_difference(set2))
-    # 判断子集和超集
-    print(set2 <= set1)
-    # print(set2.issubset(set1))
-    print(set3 <= set1)
-    # print(set3.issubset(set1))
-    print(set1 >= set2)
-    # print(set1.issuperset(set2))
-    print(set1 >= set3)
-    # print(set1.issuperset(set3))
-
-
-#字典
-#字典是另一种可变容器模型，类似于我们生活中使用的字典，它可以存储任意类型对象，与列表、集合不同的是，字典的每个元素都是由一个键和一个值组成的“键值对”，键和值通过冒号分开。
-def dictOP():
-    scores = {'骆昊': 95, '白元芳': 78, '狄仁杰': 82}
-    # 通过键可以获取字典中对应的值
-    print(scores['骆昊'])
-    print(scores['狄仁杰'])
-    # 对字典进行遍历(遍历的其实是键再通过键取对应的值)
-    for elem in scores:
-        print('%s\t--->\t%d' % (elem, scores[elem]))
-    # 更新字典中的元素
-    scores['白元芳'] = 65
-    scores['诸葛王朗'] = 71
-    scores.update(冷面=67, 方启鹤=85)
-    print(scores)
-    if '武则天' in scores:
-        print(scores['武则天'])
-    print(scores.get('武则天'))
-    # get方法也是通过键获取对应的值但是可以设置默认值
-    print(scores.get('武则天', 60))
-    # 删除字典中的元素
-    print(scores.popitem())
-    print(scores.popitem())
-    print(scores.pop('骆昊', 100))
-    # 清空字典
-    scores.clear()
-    print(scores)
+```
 
