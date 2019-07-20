@@ -1,4 +1,5 @@
 ## OOP in python
+
 ### 基础
 """
 把一组数据结构和处理它们的方法组成对象（object），把相同行为的对象归纳为类（class），通过类的封装（encapsulation）隐藏内部细节，通过继承（inheritance）实现类的特化（specialization）和泛化（generalization），通过多态（polymorphism）实现基于对象类型的动态分派。
@@ -43,10 +44,34 @@ def test():
 	stu2.checkage()
 ```
 
+也可以使用以下函数的方式来访问属性：
+
+- getattr(obj, name[, default]) : 访问对象的属性。
+- hasattr(obj,name) : 检查是否存在一个属性。
+- setattr(obj,name,value) : 设置一个属性。如果属性不存在，会创建一个新属性。
+- delattr(obj, name) : 删除属性。
+
+#### Python内置类属性
+
+- __dict__ : 类的属性（包含一个字典，由类的数据属性组成）
+- __doc__ :类的文档字符串
+- __name__: 类名
+- __module__: 类定义所在的模块（类的全名是'__main__.className'，如果类位于一个导入模块mymod中，那么className.__module__ 等于 mymod）
+- __bases__ : 类的所有父类构成元素（包含了一个由所有父类组成的元组）
+
+
 
 #### 访问可见性问题
 
 在Python中，属性和方法的访问权限只有两种，也就是公开的和私有的，如果希望属性是私有的，在给属性命名时可以用两个下划线作为开头，下面的代码可以验证这一点。
+
+Python不允许实例化的类访问私有数据，但你可以使用 **object._className__attrName**（ **对象名._类名__私有属性名** ）访问属性
+
+##### 单下划线、双下划线、头尾双下划线说明：
+
+- **__foo__**: 定义的是特殊方法，一般是系统定义名字 ，类似 **__init__()** 之类的。
+- **_foo**: 以单下划线开头的表示的是 protected 类型的变量，即保护类型只能允许其本身与子类进行访问，不能用于 **from module import \***
+- **__foo**: 双下划线的表示的是私有类型(private)的变量, 只能是允许这个类本身进行访问了。
 
 ~~~python
 class Test:
@@ -275,6 +300,22 @@ if __name__ == '__main__':
 
 刚才我们提到了，可以在已有类的基础上创建新类，这其中的一种做法就是让一个类从另一个类那里将属性和方法直接继承下来，从而减少重复代码的编写。提供继承信息的我们称之为父类，也叫超类或基类；得到继承信息的我们称之为子类，也叫派生类或衍生类。子类除了继承父类提供的属性和方法，还可以定义自己特有的属性和方法，所以子类比父类拥有的更多的能力，在实际开发中，我们经常会用子类对象去替换掉一个父类对象，这是面向对象编程中一个常见的行为，对应的原则称之为[里氏替换原则](https://zh.wikipedia.org/wiki/里氏替换原则)。下面我们先看一个继承的例子。
 
+```
+class 派生类名(基类名1 , 基类名2)
+    ...
+```
+
+除了类，还可以用表达式，基类定义在另一个模块中时这一点非常有用:
+
+```
+class DerivedClassName(modname.BaseClassName):
+```
+
+你可以使用issubclass()或者isinstance()方法来检测。
+
+- issubclass() - 布尔函数判断一个类是另一个类的子类或者子孙类，语法：issubclass(sub,sup)
+- isinstance(obj, Class) 布尔函数如果obj是Class类的实例对象或者是一个Class子类的实例对象则返回true。
+
 ```python
 class Person(object):
     """人"""
@@ -396,3 +437,50 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+
+
+#### 基础重载方法
+
+下表列出了一些通用的功能，你可以在自己的类重写：
+
+| 序号 | 方法, 描述 & 简单的调用                                      |
+| :--- | :----------------------------------------------------------- |
+| 1    | **__init__ ( self [,args...] )** 构造函数 简单的调用方法: *obj = className(args)* |
+| 2    | **__del__( self )** 析构方法, 删除一个对象 简单的调用方法 : *del obj* |
+| 3    | **__repr__( self )** 转化为供解释器读取的形式 简单的调用方法 : *repr(obj)* |
+| 4    | **__str__( self )** 用于将值转化为适于人阅读的形式 简单的调用方法 : *str(obj)* |
+| 5    | **__cmp__ ( self, x )** 对象比较 简单的调用方法 : *cmp(obj, x)* |
+
+``` python
+class Vector:
+def __init__(self, a, b):
+	self.a = a
+	self.b = b
+	def __str__(self):
+		return 'Vector (%d, %d)' % (self.a, self.b)
+	def __add__(self,other):
+		return Vector(self.a + other.a, self.b + other.b)
+
+v1 = Vector(2,10)
+v2 = Vector(5,-2)
+print (v1 + v2)
+```
+
+#### 类的专有方法：
+
+- **\__init__ :** 构造函数，在生成对象时调用
+- **\__del__ :** 析构函数，释放对象时使用
+- **\__repr__ :** 打印，转换
+- **\__setitem__ :** 按照索引赋值
+- **\__getitem__:** 按照索引获取值
+- **\__len__:** 获得长度
+- **\__cmp__:** 比较运算
+- **\__call__:** 函数调用
+- **\__add__:** 加运算
+- **\__sub__:** 减运算
+- **\__mul__:** 乘运算
+- **\__truediv__:** 除运算
+- **\__mod__:** 求余运算
+- **\__pow__:** 乘方
+
